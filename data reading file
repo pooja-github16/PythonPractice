@@ -1,0 +1,30 @@
+fd = open('data.txt', 'r', encoding='utf-8')
+txt = fd.read()
+print(txt)
+# Count paragraphs (separated by double newlines)
+paragraphs = txt.split("\n\n")
+print("Paragraphs:", len(paragraphs))
+
+# Count lines (counting sentences based on '.')
+lines = txt.split('.')
+print("Lines:", len(lines))
+
+# Count words
+words = txt.split()
+print("Words:", len(words))
+for i in range(8, 15):
+    patteren= '['+str(i)+ ']'
+    txt=txt.replace(patteren,' ')
+print(txt)
+fd.close()
+
+----------------------------------------------
+fd = open('demo.txt','w')
+fd.write("hello world!")
+fd.close()
+------------------------------------------
+fd = open('demo.txt', 'a')
+txt = input("Enter text to append the file::")
+txt = txt +'\n'
+fd.write(txt)
+fd.close()        
