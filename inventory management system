@@ -1,0 +1,61 @@
+fd=open('inventory.txt','r')
+products=fd.read().split('\n')
+print(" Inventory list")
+for product in products:
+    print(product)
+fd.close()
+
+ui_prod_id=input("Enter product id=")
+ui_prod_qn=input("Enter product quantity=")
+update_prod_list = []
+for product in products:
+    product_details = product.split(',')
+    if(product_details[0]==ui_prod_id):
+        if(int(ui_prod_qn) <= int(product_details[3])):
+            print("---------------------------------------------")
+            print("Product Name     :",product_details[1])
+            print("Price            :",product_details[2])
+            print("Product Quantity :",ui_prod_qn)
+            print("---------------------------------------------")
+            print("Billing Amount   :",int(product_details[2])*int(ui_prod_qn))    
+            print("---------------------------------------------")
+
+            #update inventory list
+            product_details[3]=str(int(product_details[3]) - int(ui_prod_qn))
+        else:
+            print("Sorry! We are mot having as much quantity as you requested.")
+            print("we are only having ", product_details[3], "quantity")
+            print("Would you like to purchase it?")
+            choice=input("Y/N")
+            
+            if(choice=='Y' or choice=='y'):
+                print("---------------------------------------------")
+                print("Product Name     :",product_details[1])
+                print("Price            :",product_details[2])
+                print("Product Quantity :",product_details[3])
+                print("---------------------------------------------")
+                print("Billing Amount   :",int(product_details[2])*int(product_details[3]))    
+                print("---------------------------------------------")
+                product_details[3]='0'
+                            
+    update_prod_list.append(product_details)    
+lst = []
+
+for i in update_prod_list:
+    prod = i[0] + ',' +i[1] + ',' +i[2] + ',' +i[3] + '\n'
+    lst.append(prod)
+            
+lst[-1] = lst[-1][:-1]
+fd=open("inventory.txt",'w')
+
+for i in lst:
+    fd.write(i)
+fd.close()
+
+fd=open('inventory.txt','r')
+products=fd.read().split('\n')
+print("Updated Inventory list")
+for product in products:
+    print(product)
+fd.close()
+                
